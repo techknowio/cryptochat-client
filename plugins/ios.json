@@ -15,6 +15,9 @@
         },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
         }
     },
     "dependent_plugins": {}

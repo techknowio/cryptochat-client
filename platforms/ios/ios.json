@@ -23,6 +23,10 @@
                         {
                             "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"ios-package\" value=\"SQLitePlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -47,6 +51,9 @@
             "PACKAGE_NAME": "com.nuwex.cryptochat"
         },
         "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.nuwex.cryptochat"
         }
     },
@@ -106,6 +113,14 @@
             "pluginId": "cordova-plugin-camera",
             "clobbers": [
                 "CameraPopoverHandle"
+            ]
+        },
+        {
+            "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+            "id": "cordova-sqlite-storage.SQLitePlugin",
+            "pluginId": "cordova-sqlite-storage",
+            "clobbers": [
+                "SQLitePlugin"
             ]
         }
     ]

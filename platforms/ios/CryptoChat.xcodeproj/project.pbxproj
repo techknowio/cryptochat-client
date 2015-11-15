@@ -55,6 +55,8 @@
 		C3E47ED932374BE693A29455 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC1BB1897BE4A2CBB13C764 /* CDVJpegHeaderWriter.m */; };
 		D7162C6307094BC09BA45EBE /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799F4E256A2847C2BF976829 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A919E51A25F84E43B37E830D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F64383AE5043378C721FEF /* CoreLocation.framework */; };
+		9E26AB0130904E6FAB139592 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F3E1C734BA4594903B4CA0 /* libsqlite3.dylib */; };
+		97B6ABE865FE4D96BDC056D7 /* sqlite3.c in Resources */ = {isa = PBXBuildFile; fileRef = 0F3A19878D1142829C5240D2 /* sqlite3.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,11 @@
 		96ADB705276749709AC18FE6 /* CDVExif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVExif.h"; path = "cordova-plugin-camera/CDVExif.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		799F4E256A2847C2BF976829 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		51F64383AE5043378C721FEF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		88F3E1C734BA4594903B4CA0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
+		78C6084E7FAB4201B2285D64 /* SQLitePlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SQLitePlugin.m"; path = "cordova-sqlite-storage/SQLitePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		0F3A19878D1142829C5240D2 /* sqlite3.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "sqlite3.c"; path = "cordova-sqlite-storage/sqlite3.c"; sourceTree = "<group>"; fileEncoding = 4; };
+		9BAAF135FC9D4FEF8B26C766 /* SQLitePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SQLitePlugin.h"; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		2836ED2F32604AF1A3F71F46 /* sqlite3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sqlite3.h"; path = "cordova-sqlite-storage/sqlite3.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +168,7 @@
 				FA91A51B129A4598AE2D6204 /* AudioToolbox.framework in Frameworks */,
 				D7162C6307094BC09BA45EBE /* ImageIO.framework in Frameworks */,
 				A919E51A25F84E43B37E830D /* CoreLocation.framework in Frameworks */,
+				9E26AB0130904E6FAB139592 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +251,7 @@
 				ED2762321DDF47408D5EEBA9 /* AudioToolbox.framework */,
 				799F4E256A2847C2BF976829 /* ImageIO.framework */,
 				51F64383AE5043378C721FEF /* CoreLocation.framework */,
+				88F3E1C734BA4594903B4CA0 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -270,6 +279,10 @@
 				16349898536E4421B1AF67A1 /* CDVCamera.h */,
 				AE2E47962E034AA3A7400CFE /* CDVJpegHeaderWriter.h */,
 				96ADB705276749709AC18FE6 /* CDVExif.h */,
+				78C6084E7FAB4201B2285D64 /* SQLitePlugin.m */,
+				0F3A19878D1142829C5240D2 /* sqlite3.c */,
+				9BAAF135FC9D4FEF8B26C766 /* SQLitePlugin.h */,
+				2836ED2F32604AF1A3F71F46 /* sqlite3.h */,
 			);
 			name = Plugins;
 			path = "CryptoChat/Plugins";
@@ -462,6 +475,8 @@
 				38A9F7D69C9C4148AF93ED0F /* UIImage+CropScaleOrientation.m in Sources */,
 				F3DB8CC4F6774B0780001FB6 /* CDVCamera.m in Sources */,
 				C3E47ED932374BE693A29455 /* CDVJpegHeaderWriter.m in Sources */,
+				66519C48C331400BBB35AD36 /* SQLitePlugin.m in Sources */,
+				97B6ABE865FE4D96BDC056D7 /* sqlite3.c in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

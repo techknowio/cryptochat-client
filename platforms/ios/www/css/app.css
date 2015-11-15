@@ -13,6 +13,14 @@
     width:100%
 }
 
+#pagetop {
+    position:absolute;
+    top:15%;
+    height:10em;
+    margin-top:-5em;
+    width:100%
+}
+
 .center {
     text-align: center;
 }
