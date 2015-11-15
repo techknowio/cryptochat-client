@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-csp>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+    <script src="cordova.js"></script>
+    <script src="scripts/index.js"></script>
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <script>
+        var module=angular.module('app', ['onsen']);
+
+        module.controller('AppController', function ($scope, $http, $sce) {
+            $scope.viewMessage = function(messageId){
+                //alert("Message ID: " + messageId);
+                myMessages.pushPage('chat.html', {message: messageId});
+            }
+        });
+
+        module.controller('ChatController', function ($scope) {
+            $scope.messageId=$scope.myMessages.getCurrentPage().options.message;
+        });
+
+        /*
+        $(document).on('pageinit', '#chat', function() {
+            $("#sendMessage").click(function(){
+                alert($(this).width());
+            });
+        });
+        */
+
+
+
+    </script>
+
+    <title>Crypto Chat</title>
+</head>
+
+<body ng-controller="AppController">
+
+
+        <ons-navigator var="myMessages">
+            <ons-page id="chats">
+                <ons-toolbar fixed-style>
+                    <div class="left">
+                        <ons-toolbar-button>
+                            <ons-icon icon="ion-ios-gear" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center toobarTitle">Messages</div>
+                    <div class="right">
+                        <ons-toolbar-button>
+                            <ons-icon icon="ion-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+
+
+                <ons-list>
+                    <ons-list-item  ng-click="viewMessage(1)"  ng-click="viewMessage(messageId)" modifier="chevron" class="list-item-container">
+                        <div class="list-item-left">
+                            <ons-icon icon="fa-circle"></ons-icon>
+                        </div>
+                        <div class="list-item-right">
+                            <div class="list-item-content">
+                                <div class="name">Daniel <span class="time">9:36 PM</span></div>
+                                <span class="desc">Hi, how are you? Glad to hear you are interested in our project.</span>
+                            </div>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item  ng-click="viewMessage(2)" modifier="chevron" class="list-item-container">
+                        <div class="list-item-left">
+
+                        </div>
+                        <div class="list-item-right">
+                            <div class="list-item-content">
+                                <div class="name">Daniel <span class="time">9:36 PM</span></div>
+                                <span class="desc">Hi, how are you? Glad to hear you are interested in our project.</span>
+                            </div>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item  ng-click="viewMessage(3)" modifier="chevron" class="list-item-container">
+                        <div class="list-item-left">
+                            <ons-icon icon="fa-circle"></ons-icon>
+                        </div>
+                        <div class="list-item-right">
+                            <div class="list-item-content">
+                                <div class="name">Daniel <span class="time">9:36 PM</span></div>
+                                <span class="desc">Hi, how are you? Glad to hear you are interested in our project.</span>
+                            </div>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item  ng-click="viewMessage(4)" modifier="chevron" class="list-item-container">
+                        <div class="list-item-left">
+
+                        </div>
+                        <div class="list-item-right">
+                            <div class="list-item-content">
+                                <div class="name">Daniel <span class="time">9:36 PM</span></div>
+                                <span class="desc">Hi, how are you? Glad to hear you are interested in our project.</span>
+                            </div>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item  ng-click="viewMessage(5)" modifier="chevron" class="list-item-container">
+                        <div class="list-item-left">
+
+                        </div>
+                        <div class="list-item-right">
+                            <div class="list-item-content">
+                                <div class="name">Daniel <span class="time">9:36 PM</span></div>
+                                <span class="desc">Hi, how are you? Glad to hear you are interested in our project.</span>
+                            </div>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item  ng-click="viewMessage(6)" modifier="chevron" class="list-item-container">
+                        <div class="list-item-left">
+
+                        </div>
+                        <div class="list-item-right">
+                            <div class="list-item-content">
+                                <div class="name">Daniel <span class="time">9:36 PM</span></div>
+                                <span class="desc">Hi, how are you? Glad to hear you are interested in our project.</span>
+                            </div>
+                        </div>
+                    </ons-list-item>
+                </ons-list>
+
+
+            </ons-page>
+        </ons-navigator>
+
+
+    <ons-template id="chat.html">
+            <ons-page id="chat"  ng-controller="ChatController">
+                <ons-toolbar fixed-style>
+                    <div class="left"><ons-back-button>Messages</ons-back-button></div>
+                    <div class="center toobarTitle">John</div>
+                    <div class="right"><ons-toolbar-button>Details</ons-toolbar-button></div>
+                </ons-toolbar>
+
+
+                <blockquote class="chat">
+                    <p class="them">
+                        This Chat ID Is: {{messageId}}
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                    <p class="them">
+                        Annie, I'm going to be a lil late for the rehearsal, tonight.
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                    <p class="them">
+                        Annie, I'm going to be a lil late for the rehearsal, tonight.
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                    <p class="them">
+                        Annie, I'm going to be a lil late for the rehearsal, tonight.
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                </blockquote>
+
+                <div id="chatForm">
+                    <input type="text" class="text-input" placeholder="Message" value=""> <button id="sendMessage" class="button button--quiet">Send</button>
+                </div>
+
+
+            </ons-page>
+    </ons-template>
+
+    <ons-template id="settings.html">
+            <ons-page id="settings">
+                <ons-toolbar fixed-style>
+                    <div class="center toobarTitle">Settings</div>
+                </ons-toolbar>
+
+
+            </ons-page>
+    </ons-template>
+</body>
+</html>
