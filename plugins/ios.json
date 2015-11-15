@@ -6,6 +6,16 @@
     "config_munge": {
         "files": {}
     },
-    "installed_plugins": {},
+    "installed_plugins": {
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        }
+    },
     "dependent_plugins": {}
 }
