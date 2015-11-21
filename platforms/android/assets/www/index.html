@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-csp>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+    <script src="cordova.js"></script>
+    <script src="scripts/index.js"></script>
+    <script src="js/forge.min.js"></script>
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <script>
+        var db = null;
+
+        var module=angular.module('app', ['onsen']);
+        document.addEventListener('deviceready',onDeviceReady,false);
+        function buildDB() {
+          db.transaction(function(tx) {
+              tx.executeSql('CREATE TABLE IF NOT EXISTS account (username text)');
+          });
+        }
+        function onDeviceReady() {
+            db = window.sqlitePlugin.openDatabase({name: "cryptochat.db"});
+
+            buildDB();
+            myMessages.pushPage('settings.html');
+        }
+        module.controller('AppController', function ($scope, $http, $sce) {
+            $scope.viewMessage = function(messageId){
+                myMessages.pushPage('chat.html', {message: messageId});
+            }
+            $scope.addUser = function() {
+                myMessages.pushPage('add.html');
+            }
+            $scope.yourSettings = function() {
+                myMessages.pushPage('settings.html');
+            }
+        });
+
+        module.controller('SettingsController', function($scope){
+          $scope.BackupDB = function() {
+            myMessages.pushPage('backup.html');
+          }
+          $scope.WipeDB = function() {
+            ons.notification.confirm({
+                message: 'Are you sure you wish to wipe all of your data?',
+                title: 'DANGER!',
+                callback: function(answer) {
+                  if (answer == 1) {
+                    ons.notification.alert({
+                      message: 'All your data was been removed',
+                      title: 'Wiped'
+                    });
+                  }
+                }
+              });
+          }
+          $scope.SetPinCode = function() {
+            myMessages.pushPage('setpincode.html');
+          }
+          $scope.save = function() {
+            alert($scope.username);
+          }
+
+        });
+
+        module.controller('BackupController', function($scope) {
+
+        });
+        module.controller('SetPinCodeController', function($scope) {
+            $scope.save = function() {
+              alert("SAVE!");
+            }
+        });
+        module.controller('ChatController', function ($scope) {
+            $scope.messageId=$scope.myMessages.getCurrentPage().options.message;
+        });
+
+        module.controller('AddUserController', function ($scope) {
+            $scope.GenKey = function() {
+                   myMessages.pushPage('genkey.html');
+            }
+            $scope.GetKey = function() {
+                   //myMessages.pushPage('getkey.html');
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                        alert("We got a barcode\n" +
+                            "Result: " + result.text + "\n" +
+                            "Format: " + result.format + "\n" +
+                            "Cancelled: " + result.cancelled);
+                        },
+                        function (error) {
+                            alert("Scanning failed: " + error);
+                        }
+                );
+            }
+        });
+
+        module.controller('GenKeyController', function ($scope) {
+                var key = forge.random.getBytesSync(32);
+                var iv = forge.random.getBytesSync(32);
+                var key64 = forge.util.encode64(key);
+                var iv64 = forge.util.encode64(iv);
+                var key='{"key":"'+key64+'","iv":"'+iv64+'"}'
+                cordova.plugins.barcodeScanner.encode(cordova.plugins.barcodeScanner.Encode.TEXT_TYPE, key, function(success) {
+                    document.getElementById('keyimage').src=success.file;
+                });
+        });
+    </script>
+
+    <title>Crypto Chat</title>
+</head>
+
+<body ng-controller="AppController">
+        <ons-navigator var="myMessages">
+            <ons-page id="chats">
+                <ons-toolbar fixed-style>
+                    <div class="left">
+                        <ons-toolbar-button ng-click="yourSettings()">
+                            <ons-icon icon="ion-ios-gear" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center toobarTitle">Messages</div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="addUser()">
+                            <ons-icon icon="ion-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+
+
+                <ons-list>
+                    <ons-list-item  ng-click="viewMessage(6)" modifier="chevron" class="list-item-container">
+                        <div class="list-item-left">
+				                      <ons-icon icon="fa-circle"></ons-icon>
+                        </div>
+                        <div class="list-item-right">
+                            <div class="list-item-content">
+                                <div class="name">Daniel <span class="time">9:36 PM</span></div>
+                                <span class="desc">Hi, how are you? Glad to hear you are interested in our project.</span>
+                            </div>
+                        </div>
+                    </ons-list-item>
+                </ons-list>
+
+
+            </ons-page>
+        </ons-navigator>
+    <ons-template id="add.html">
+            <ons-page id="AddUser"  ng-controller="AddUserController">
+                <ons-toolbar fixed-style>
+                    <div class="left"><ons-back-button>Messages</ons-back-button></div>
+                    <div class="center toobarTitle">Add User</div>
+                </ons-toolbar>
+                <div id="pagecenter">
+                    <ons-button modifier="large--cta" ng-click="GenKey()">
+                        Generate Your Key
+                    </ons-button>
+                    <br />
+                    <ons-button modifier="large--cta" ng-click="GetKey()">
+                        Get Other Key
+                    </ons-button>
+                </div>
+            </ons-page>
+    </ons-template>
+
+    <ons-template id="genkey.html">
+            <ons-page id="GenKeyNow"  ng-controller="GenKeyController">
+                <ons-toolbar fixed-style>
+                    <div class="left"><ons-back-button>New Keys</ons-back-button></div>
+                    <div class="center toobarTitle">Your Key</div>
+                </ons-toolbar>
+                <div id="pagecenterup" align="center">
+                    <img id="keyimage"></img>
+                </div>
+            </ons-page>
+    </ons-template>
+    <ons-template id="setpincode.html">
+            <ons-page id="SetPinCodeNow"  ng-controller="SetPinCodeController">
+                <ons-toolbar fixed-style>
+                    <div class="left"><ons-back-button>Settings</ons-back-button></div>
+                    <div class="center toobarTitle">Set Pin Code</div>
+                    <div class="right"><ons-toolbar-button ng-click="save()">Save</ons-toolbar-button></div>
+                </ons-toolbar>
+                <div id="pagecenterup" align="center">
+                    <div align="left">For added security you can set a pin code, a pincode will be required everytime you open the app, and a pincode will encrypt every field with your pincode.</div><br />
+                    <input type="password" class="text-input" style="display: block; width: 100%" placeholder="Password" value="" id="pincode1"><br />
+                    <input type="password" class="text-input" style="display: block; width: 100%" placeholder="Repeat Password" value="" id="pincode2"><br />
+                </div>
+            </ons-page>
+    </ons-template>
+
+    <ons-template id="backup.html">
+            <ons-page id="BackupNow"  ng-controller="BackupController" bgclor="black">
+                <ons-toolbar fixed-style>
+                    <div class="left"><ons-back-button>Settings</ons-back-button></div>
+                    <div class="center toobarTitle">Backup</div>
+                </ons-toolbar>
+                <div id="pagetop" align="center">
+                  <input type="password" class="text-input" style="display: block; width: 100%" placeholder="Password" value=""><br />
+                  <ons-button modifier="large--cta" ng-click="SaveDB()">
+                      Save Now
+                  </ons-button>
+                </div>
+            </ons-page>
+    </ons-template>
+
+    <ons-template id="settings.html">
+            <ons-page id="settings"  ng-controller="SettingsController">
+                <ons-toolbar fixed-style>
+                    <div class="left"><ons-back-button>Messages</ons-back-button></div>
+                    <div class="center toobarTitle">Settings</div>
+                    <div class="right"><ons-toolbar-button ng-click="save()">Save</ons-toolbar-button></div>
+                </ons-toolbar>
+                <div id="pagetop" align="center">
+                  <div align="left">
+                    This is the name that will be displayed with all of your peers <br />
+                  </div>
+                  <input type="text" class="text-input" placeholder="Username" style="display: block; width: 100%" value="" ng-model="username"><br />
+                  <ons-button modifier="large--cta" ng-click="SetPinCode()">
+                      Set A Pincode
+                  </ons-button><br />
+                  <ons-button modifier="large--cta" ng-click="BackupDB()">
+                      Backup Your Database
+                  </ons-button><br />
+                  <ons-button modifier="large--cta" ng-click="WipeDB()">
+                      Wipe Your Database
+                  </ons-button>
+                </div>
+            </ons-page>
+    </ons-template>
+
+    <ons-template id="chat.html">
+            <ons-page id="chat"  ng-controller="ChatController">
+                <ons-toolbar fixed-style>
+                    <div class="left"><ons-back-button>Messages</ons-back-button></div>
+                    <div class="center toobarTitle">John</div>
+                    <div class="right"><ons-toolbar-button>Details</ons-toolbar-button></div>
+                </ons-toolbar>
+
+
+                <blockquote class="chat">
+                    <p class="them">
+                        This Chat ID Is: {{messageId}}
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                    <p class="them">
+                        Annie, I'm going to be a lil late for the rehearsal, tonight.
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                    <p class="them">
+                        Annie, I'm going to be a lil late for the rehearsal, tonight.
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                    <p class="them">
+                        Annie, I'm going to be a lil late for the rehearsal, tonight.
+                    </p>
+
+                    <p class="me">
+                        S'Okay, Maude.  You know your lines...?
+                    </p>
+
+                    <p class="them">
+                        I know em, I don't know what order they come in...
+                    </p>
+
+                    <p class="me">
+                        We'll work it out...
+                    </p>
+                </blockquote>
+
+                <div id="chatForm">
+                    <input type="text" class="text-input" placeholder="Message" value=""> <button id="sendMessage" class="button button--quiet">Send</button>
+                </div>
+
+
+            </ons-page>
+    </ons-template>
+</body>
+</html>

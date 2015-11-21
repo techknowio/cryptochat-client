@@ -1,0 +1,27 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.nuwex.cryptochat"
+        }
+    },
+    "dependent_plugins": {}
+}
